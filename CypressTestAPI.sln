@@ -1,0 +1,27 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CypressTestAPI.Standard", "CypressTestAPI.Standard/CypressTestAPI.Standard.csproj", "{a05f7be2-5ec8-4d2f-887b-c79d4e99784d}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CypressTestAPI.Tests", "CypressTestAPI.Tests/CypressTestAPI.Tests.csproj", "{253ebcf1-271a-493f-bdc5-f04dfe837575}"
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {a05f7be2-5ec8-4d2f-887b-c79d4e99784d}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {a05f7be2-5ec8-4d2f-887b-c79d4e99784d}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {a05f7be2-5ec8-4d2f-887b-c79d4e99784d}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {a05f7be2-5ec8-4d2f-887b-c79d4e99784d}.Release|Any CPU.Build.0 = Release|Any CPU
+        {253ebcf1-271a-493f-bdc5-f04dfe837575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {253ebcf1-271a-493f-bdc5-f04dfe837575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {253ebcf1-271a-493f-bdc5-f04dfe837575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {253ebcf1-271a-493f-bdc5-f04dfe837575}.Release|Any CPU.Build.0 = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(SolutionProperties) = preSolution
+        HideSolutionNode = FALSE
+    EndGlobalSection
+EndGlobal
