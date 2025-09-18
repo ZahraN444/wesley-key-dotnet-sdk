@@ -12,11 +12,11 @@ Find out more about Swagger: [http://swagger.io](http://swagger.io)
 If you are building with .NET CLI tools then you can also use the following command:
 
 ```bash
-dotnet add package WesleyKeySDK --version 0.1.2
+dotnet add package WesleyKeySDK --version 0.1.3
 ```
 
 You can also view the package at:
-https://www.nuget.org/packages/WesleyKeySDK/0.1.2
+https://www.nuget.org/packages/WesleyKeySDK/0.1.3
 
 ## Test the SDK
 
@@ -24,7 +24,7 @@ The generated SDK also contain one or more Tests, which are contained in the Tes
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
@@ -33,10 +33,10 @@ The following parameters are configurable for the API Client:
 | TestHeader | `string` | This is a test header<br>*Default*: `"TestHeaderDefaultValue"` |
 | Environment | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
 | Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(100)` |
-| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
-| ApiKeyCredentials | [`ApiKeyCredentials`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/auth/custom-header-signature.md) | The Credentials Setter for Custom Header Signature |
-| HttpBasicCredentials | [`HttpBasicCredentials`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
-| PetstoreAuthCredentials | [`PetstoreAuthCredentials`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/auth/oauth-2-implicit-grant.md) | The Credentials Setter for OAuth 2 Implicit Grant |
+| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
+| ApiKeyCredentials | [`ApiKeyCredentials`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/auth/custom-header-signature.md) | The Credentials Setter for Custom Header Signature |
+| HttpBasicCredentials | [`HttpBasicCredentials`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
+| PetstoreAuthCredentials | [`PetstoreAuthCredentials`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/auth/oauth-2-implicit-grant.md) | The Credentials Setter for OAuth 2 Implicit Grant |
 
 The API client can be initialized as follows:
 
@@ -93,36 +93,36 @@ The SDK can be configured to use a different environment for making API calls. A
 
 This API uses the following authentication schemes.
 
-* [`api_key (Custom Header Signature)`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/auth/custom-header-signature.md)
-* [`httpBasic (Basic Authentication)`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/auth/basic-authentication.md)
-* [`petstore_auth (OAuth 2 Implicit Grant)`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/auth/oauth-2-implicit-grant.md)
+* [`api_key (Custom Header Signature)`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/auth/custom-header-signature.md)
+* [`httpBasic (Basic Authentication)`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/auth/basic-authentication.md)
+* [`petstore_auth (OAuth 2 Implicit Grant)`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/auth/oauth-2-implicit-grant.md)
 
 ## List of APIs
 
-* [Pet](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/controllers/pet.md)
-* [Store](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/controllers/store.md)
-* [User](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/controllers/user.md)
+* [Pet](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/controllers/pet.md)
+* [Store](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/controllers/store.md)
+* [User](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/controllers/user.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [HttpClientConfiguration](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/http-client-configuration.md)
-* [HttpClientConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/http-client-configuration-builder.md)
-* [ProxyConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/proxy-configuration-builder.md)
+* [HttpClientConfiguration](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/http-client-configuration.md)
+* [HttpClientConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/http-client-configuration-builder.md)
+* [ProxyConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/proxy-configuration-builder.md)
 
 ### HTTP
 
-* [HttpCallback](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/http-callback.md)
-* [HttpContext](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/http-context.md)
-* [HttpRequest](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/http-request.md)
-* [HttpResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/http-response.md)
-* [HttpStringResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/http-string-response.md)
+* [HttpCallback](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/http-callback.md)
+* [HttpContext](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/http-context.md)
+* [HttpRequest](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/http-request.md)
+* [HttpResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/http-response.md)
+* [HttpStringResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/http-string-response.md)
 
 ### Utilities
 
-* [ApiException](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/api-exception.md)
-* [ApiHelper](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/api-helper.md)
-* [CustomDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/custom-date-time-converter.md)
-* [UnixDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.2/doc/unix-date-time-converter.md)
+* [ApiException](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/api-exception.md)
+* [ApiHelper](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/api-helper.md)
+* [CustomDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/custom-date-time-converter.md)
+* [UnixDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.3/doc/unix-date-time-converter.md)
 
