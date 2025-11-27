@@ -5,54 +5,48 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| TestHeader | `string` | This is a test header<br>*Default*: `"TestHeaderDefaultValue"` |
+| DefaultHost | `string` | *Default*: `"www.example.com"` |
 | Environment | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
 | Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(100)` |
 | HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](../doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
-| ApiKeyCredentials | [`ApiKeyCredentials`](auth/custom-header-signature.md) | The Credentials Setter for Custom Header Signature |
-| HttpBasicCredentials | [`HttpBasicCredentials`](auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
-| PetstoreAuthCredentials | [`PetstoreAuthCredentials`](auth/oauth-2-implicit-grant.md) | The Credentials Setter for OAuth 2 Implicit Grant |
 
 The API client can be initialized as follows:
 
+## Code-Based Initialization
+
 ```csharp
-using SwaggerPetstore.Standard;
-using SwaggerPetstore.Standard.Authentication;
-using SwaggerPetstore.Standard.Models;
-using System.Collections.Generic;
+using CypressTestAPI.Standard;
 
 namespace ConsoleApp;
 
-SwaggerPetstoreClient client = new SwaggerPetstoreClient.Builder()
-    .ApiKeyCredentials(
-        new ApiKeyModel.Builder(
-            "api_key"
-        )
-        .Build())
-    .HttpBasicCredentials(
-        new HttpBasicModel.Builder(
-            "username",
-            "passwprd"
-        )
-        .Build())
-    .PetstoreAuthCredentials(
-        new PetstoreAuthModel.Builder(
-            "OAuthClientId",
-            "OAuthRedirectUri"
-        )
-        .OAuthScopes(
-            new List<OAuthScopePetstoreAuthEnum>
-            {
-                OAuthScopePetstoreAuthEnum.Readpets,
-                OAuthScopePetstoreAuthEnum.Writepets,
-            })
-        .Build())
-    .TestHeader("TestHeaderDefaultValue")
-    .Environment(SwaggerPetstore.Standard.Environment.Production)
+CypressTestAPIClient client = new CypressTestAPIClient.Builder()
+    .Environment(CypressTestAPI.Standard.Environment.Production)
+    .DefaultHost("www.example.com")
     .Build();
 ```
 
-## Swagger PetstoreClient Class
+## Configuration-Based Initialization
+
+```csharp
+using CypressTestAPI.Standard;
+using Microsoft.Extensions.Configuration;
+
+namespace ConsoleApp;
+
+// Build the IConfiguration using .NET conventions (JSON, environment, etc.)
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("config.json")
+    .AddEnvironmentVariables() // [optional] read environment variables
+    .Build();
+
+// Instantiate your SDK and configure it from IConfiguration
+var client = CypressTestAPIClient
+    .FromConfiguration(configuration.GetSection("CypressTestAPI"));
+```
+
+See the [Configuration-Based Initialization](../doc/configuration-based-initialization.md) section for details.
+
+## Cypress Test APIClient Class
 
 The gateway for the SDK. This class acts as a factory for the Controllers and also holds the configuration of the SDK.
 
@@ -60,9 +54,7 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 
 | Name | Description |
 |  --- | --- |
-| PetController | Gets PetController controller. |
-| StoreController | Gets StoreController controller. |
-| UserController | Gets UserController controller. |
+| APIController | Gets APIController controller. |
 
 ### Properties
 
@@ -70,22 +62,19 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 |  --- | --- | --- |
 | HttpClientConfiguration | Gets the configuration of the Http Client associated with this client. | [`IHttpClientConfiguration`](../doc/http-client-configuration.md) |
 | Timeout | Http client timeout. | `TimeSpan` |
-| TestHeader | This is a test header | `string` |
 | Environment | Current API environment. | `Environment` |
-| ApiKeyCredentials | Gets the credentials to use with ApiKey. | [`IApiKeyCredentials`](auth/custom-header-signature.md) |
-| HttpBasicCredentials | Gets the credentials to use with HttpBasic. | [`IHttpBasicCredentials`](auth/basic-authentication.md) |
-| PetstoreAuthCredentials | Gets the credentials to use with PetstoreAuth. | [`IPetstoreAuthCredentials`](auth/oauth-2-implicit-grant.md) |
+| DefaultHost | DefaultHost value. | `string` |
 
 ### Methods
 
 | Name | Description | Return Type |
 |  --- | --- | --- |
 | `GetBaseUri(Server alias = Server.Default)` | Gets the URL for a particular alias in the current environment and appends it with template parameters. | `string` |
-| `ToBuilder()` | Creates an object of the Swagger PetstoreClient using the values provided for the builder. | `Builder` |
+| `ToBuilder()` | Creates an object of the Cypress Test APIClient using the values provided for the builder. | `Builder` |
 
-## Swagger PetstoreClient Builder Class
+## Cypress Test APIClient Builder Class
 
-Class to build instances of Swagger PetstoreClient.
+Class to build instances of Cypress Test APIClient.
 
 ### Methods
 
@@ -93,9 +82,6 @@ Class to build instances of Swagger PetstoreClient.
 |  --- | --- | --- |
 | `HttpClientConfiguration(Action<`[`HttpClientConfiguration.Builder`](../doc/http-client-configuration-builder.md)`> action)` | Gets the configuration of the Http Client associated with this client. | `Builder` |
 | `Timeout(TimeSpan timeout)` | Http client timeout. | `Builder` |
-| `TestHeader(string testHeader)` | This is a test header | `Builder` |
 | `Environment(Environment environment)` | Current API environment. | `Builder` |
-| `ApiKeyCredentials(Action<ApiKeyModel.Builder> action)` | Sets credentials for ApiKey. | `Builder` |
-| `HttpBasicCredentials(Action<HttpBasicModel.Builder> action)` | Sets credentials for HttpBasic. | `Builder` |
-| `PetstoreAuthCredentials(Action<PetstoreAuthModel.Builder> action)` | Sets credentials for PetstoreAuth. | `Builder` |
+| `DefaultHost(string defaultHost)` | DefaultHost value. | `Builder` |
 
