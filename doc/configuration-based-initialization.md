@@ -16,9 +16,9 @@ The following code sample demonstrates how to initialize the SDK client using an
 The `Builder.FromConfiguration` method reads values from the provided configuration section and returns a builder instance, allowing you to override specific properties directly in code if needed before building the final client.
 
 ```csharp
-using CypressTestAPI.Standard;
+using SwaggerPetstore.Standard;
 using Microsoft.Extensions.Configuration;
-using Environment = CypressTestAPI.Standard.Environment;
+using Environment = SwaggerPetstore.Standard.Environment;
 
 namespace ConsoleApp;
 
@@ -29,8 +29,8 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 // Instantiate your SDK builder and configure it from IConfiguration with overrides
-var client = CypressTestAPIClient.Builder
-    .FromConfiguration(configuration.GetSection("CypressTestAPI"))
+var client = SwaggerPetstoreClient.Builder
+    .FromConfiguration(configuration.GetSection("SwaggerPetstore"))
     .Environment(Environment.Production)
     .HttpClientConfig(c => c.Timeout(TimeSpan.FromSeconds(60)))
     .Build();
@@ -40,9 +40,21 @@ var client = CypressTestAPIClient.Builder
 
 ```csharp
 {
-  "CypressTestAPI": {
+  "SwaggerPetstore": {
     "Environment": "production",
-    "DefaultHost": "defaultHost",
+    "TestHeader": "testHeader",
+    "ApiKeyCredentials": {
+      "ApiKey": "apiKey",
+    },
+    "HttpBasicCredentials": {
+      "Username": "username",
+      "Passwprd": "passwprd",
+    },
+    "PetstoreAuthCredentials": {
+      "OAuthClientId": "oAuthClientId",
+      "OAuthRedirectUri": "oAuthRedirectUri",
+      "OAuthScopes": [],
+    },
     "HttpClientConfig": {
       "Timeout": "00:01:00",
       "NumberOfRetries": 3,

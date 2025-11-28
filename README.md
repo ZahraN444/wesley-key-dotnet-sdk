@@ -1,20 +1,22 @@
 
-# Getting Started with Cypress Test API
+# Getting Started with Swagger Petstore
 
 ## Introduction
 
-This is a sample API to demonstrate an OpenAPI spec with multiple endpoints and a custom model.
+This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+
+Find out more about Swagger: [http://swagger.io](http://swagger.io)
 
 ## Install the Package
 
 If you are building with .NET CLI tools then you can also use the following command:
 
 ```bash
-dotnet add package WesleyKeySDK --version 0.1.6
+dotnet add package WesleyKeySDK --version 0.1.7
 ```
 
 You can also view the package at:
-https://www.nuget.org/packages/WesleyKeySDK/0.1.6
+https://www.nuget.org/packages/WesleyKeySDK/0.1.7
 
 ## Test the SDK
 
@@ -22,36 +24,65 @@ The generated SDK also contain one or more Tests, which are contained in the Tes
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| DefaultHost | `string` | *Default*: `"www.example.com"` |
+| TestHeader | `string` | This is a test header<br>*Default*: `"TestHeaderDefaultValue"` |
 | Environment | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
 | Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(100)` |
-| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
+| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
+| ApiKeyCredentials | [`ApiKeyCredentials`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/auth/custom-header-signature.md) | The Credentials Setter for Custom Header Signature |
+| HttpBasicCredentials | [`HttpBasicCredentials`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
+| PetstoreAuthCredentials | [`PetstoreAuthCredentials`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/auth/oauth-2-implicit-grant.md) | The Credentials Setter for OAuth 2 Implicit Grant |
 
 The API client can be initialized as follows:
 
 ### Code-Based Initialization
 
 ```csharp
-using CypressTestAPI.Standard;
+using SwaggerPetstore.Standard;
+using SwaggerPetstore.Standard.Authentication;
+using SwaggerPetstore.Standard.Models;
+using System.Collections.Generic;
 
 namespace ConsoleApp;
 
-CypressTestAPIClient client = new CypressTestAPIClient.Builder()
-    .Environment(CypressTestAPI.Standard.Environment.Production)
-    .DefaultHost("www.example.com")
+SwaggerPetstoreClient client = new SwaggerPetstoreClient.Builder()
+    .ApiKeyCredentials(
+        new ApiKeyModel.Builder(
+            "api_key"
+        )
+        .Build())
+    .HttpBasicCredentials(
+        new HttpBasicModel.Builder(
+            "username",
+            "passwprd"
+        )
+        .Build())
+    .PetstoreAuthCredentials(
+        new PetstoreAuthModel.Builder(
+            "OAuthClientId",
+            "OAuthRedirectUri"
+        )
+        .OAuthScopes(
+            new List<OAuthScopePetstoreAuthEnum>
+            {
+                OAuthScopePetstoreAuthEnum.Readpets,
+                OAuthScopePetstoreAuthEnum.Writepets,
+            })
+        .Build())
+    .TestHeader("TestHeaderDefaultValue")
+    .Environment(SwaggerPetstore.Standard.Environment.Production)
     .Build();
 ```
 
 ### Configuration-Based Initialization
 
 ```csharp
-using CypressTestAPI.Standard;
+using SwaggerPetstore.Standard;
 using Microsoft.Extensions.Configuration;
 
 namespace ConsoleApp;
@@ -63,37 +94,59 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 // Instantiate your SDK and configure it from IConfiguration
-var client = CypressTestAPIClient
-    .FromConfiguration(configuration.GetSection("CypressTestAPI"));
+var client = SwaggerPetstoreClient
+    .FromConfiguration(configuration.GetSection("SwaggerPetstore"));
 ```
 
-See the [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/configuration-based-initialization.md) section for details.
+See the [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/configuration-based-initialization.md) section for details.
+
+## Environments
+
+The SDK can be configured to use a different environment for making API calls. Available environments are:
+
+### Fields
+
+| Name | Description |
+|  --- | --- |
+| production | **Default** |
+| environment2 | - |
+| environment3 | - |
+
+## Authorization
+
+This API uses the following authentication schemes.
+
+* [`api_key (Custom Header Signature)`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/auth/custom-header-signature.md)
+* [`httpBasic (Basic Authentication)`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/auth/basic-authentication.md)
+* [`petstore_auth (OAuth 2 Implicit Grant)`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/auth/oauth-2-implicit-grant.md)
 
 ## List of APIs
 
-* [API](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/controllers/api.md)
+* [Pet](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/controllers/pet.md)
+* [Store](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/controllers/store.md)
+* [User](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/controllers/user.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/configuration-based-initialization.md)
-* [HttpClientConfiguration](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/http-client-configuration.md)
-* [HttpClientConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/http-client-configuration-builder.md)
-* [ProxyConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/proxy-configuration-builder.md)
+* [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/configuration-based-initialization.md)
+* [HttpClientConfiguration](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/http-client-configuration.md)
+* [HttpClientConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/http-client-configuration-builder.md)
+* [ProxyConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/proxy-configuration-builder.md)
 
 ### HTTP
 
-* [HttpCallback](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/http-callback.md)
-* [HttpContext](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/http-context.md)
-* [HttpRequest](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/http-request.md)
-* [HttpResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/http-response.md)
-* [HttpStringResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/http-string-response.md)
+* [HttpCallback](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/http-callback.md)
+* [HttpContext](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/http-context.md)
+* [HttpRequest](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/http-request.md)
+* [HttpResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/http-response.md)
+* [HttpStringResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/http-string-response.md)
 
 ### Utilities
 
-* [ApiException](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/api-exception.md)
-* [ApiHelper](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/api-helper.md)
-* [CustomDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/custom-date-time-converter.md)
-* [UnixDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.6/doc/unix-date-time-converter.md)
+* [ApiException](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/api-exception.md)
+* [ApiHelper](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/api-helper.md)
+* [CustomDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/custom-date-time-converter.md)
+* [UnixDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/0.1.7/doc/unix-date-time-converter.md)
 

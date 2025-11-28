@@ -18,12 +18,12 @@ To configure the SDK to use a proxy server, initialize the proxy configuration d
 ## Usage Example
 
 ```csharp
-using CypressTestAPI.Standard;
-using CypressTestAPI.Standard.Http.Client.Proxy;
+using SwaggerPetstore.Standard;
+using SwaggerPetstore.Standard.Http.Client.Proxy;
 
 namespace ConsoleApp;
 
-var client = new CypressTestAPIClient.Builder()
+var client = new SwaggerPetstoreClient.Builder()
 .HttpClientConfig(config => config
     .Proxy(new ProxyConfigurationBuilder("http://localhost")
             .Port(8080)
