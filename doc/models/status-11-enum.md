@@ -1,9 +1,11 @@
 
-# Status 1 Enum
+# Status 11 Enum
+
+The status of the items to filter by.
 
 ## Enumeration
 
-`Status1Enum`
+`Status11Enum`
 
 ## Fields
 
