@@ -1,6 +1,8 @@
 
 # Status 1 Enum
 
+Order Status
+
 ## Enumeration
 
 `Status1Enum`
@@ -9,7 +11,7 @@
 
 | Name |
 |  --- |
-| `Enumvalue1` |
-| `Enumvalue2` |
-| `Enumvalue3` |
+| `Placed` |
+| `Approved` |
+| `Delivered` |
 
