@@ -6,7 +6,7 @@ The following parameters are configurable for the API Client:
 | Parameter | Type | Description |
 |  --- | --- | --- |
 | DefaultHost | `string` | *Default*: `"www.example.com"` |
-| Environment | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
+| Environment | [`Environment`](../README.md#environments) | The API environment. <br> **Default: `Environment.Production`** |
 | Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(100)` |
 | HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](../doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
 
@@ -20,6 +20,8 @@ using CypressTestAPI.Standard;
 namespace ConsoleApp;
 
 CypressTestAPIClient client = new CypressTestAPIClient.Builder()
+    .HttpClientConfig(httpClientConfig =>
+        httpClientConfig.Timeout(TimeSpan.FromSeconds(100)))
     .Environment(CypressTestAPI.Standard.Environment.Production)
     .DefaultHost("www.example.com")
     .Build();
