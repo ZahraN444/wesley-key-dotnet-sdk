@@ -10,11 +10,11 @@ This is a sample API to demonstrate an OpenAPI spec with multiple endpoints and 
 If you are building with .NET CLI tools then you can also use the following command:
 
 ```bash
-dotnet add package WesleyKeySDK --version 3.0.5
+dotnet add package WesleyKeySDK --version 3.0.6
 ```
 
 You can also view the package at:
-https://www.nuget.org/packages/WesleyKeySDK/3.0.5
+https://www.nuget.org/packages/WesleyKeySDK/3.0.6
 
 ## Test the SDK
 
@@ -22,16 +22,16 @@ The generated SDK also contain one or more Tests, which are contained in the Tes
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
 | DefaultHost | `string` | *Default*: `"www.example.com"` |
-| Environment | [`Environment`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/README.md#environments) | The API environment. <br> **Default: `Environment.Production`** |
+| Environment | [`Environment`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/README.md#environments) | The API environment. <br> **Default: `Environment.Production`** |
 | Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(100)` |
-| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
+| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
 
 The API client can be initialized as follows:
 
@@ -69,7 +69,7 @@ var client = CypressTestAPIClient
     .FromConfiguration(configuration.GetSection("CypressTestAPI"));
 ```
 
-See the [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/configuration-based-initialization.md) section for details.
+See the [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/configuration-based-initialization.md) section for details.
 
 ## Environments
 
@@ -83,29 +83,29 @@ The SDK can be configured to use a different environment for making API calls. A
 
 ## List of APIs
 
-* [API](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/controllers/api.md)
+* [API](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/controllers/api.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/configuration-based-initialization.md)
-* [HttpClientConfiguration](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/http-client-configuration.md)
-* [HttpClientConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/http-client-configuration-builder.md)
-* [ProxyConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/proxy-configuration-builder.md)
+* [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/configuration-based-initialization.md)
+* [HttpClientConfiguration](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/http-client-configuration.md)
+* [HttpClientConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/http-client-configuration-builder.md)
+* [ProxyConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/proxy-configuration-builder.md)
 
 ### HTTP
 
-* [HttpCallback](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/http-callback.md)
-* [HttpContext](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/http-context.md)
-* [HttpRequest](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/http-request.md)
-* [HttpResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/http-response.md)
-* [HttpStringResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/http-string-response.md)
+* [HttpCallback](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/http-callback.md)
+* [HttpContext](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/http-context.md)
+* [HttpRequest](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/http-request.md)
+* [HttpResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/http-response.md)
+* [HttpStringResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/http-string-response.md)
 
 ### Utilities
 
-* [ApiException](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/api-exception.md)
-* [ApiHelper](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/api-helper.md)
-* [CustomDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/custom-date-time-converter.md)
-* [UnixDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.5/doc/unix-date-time-converter.md)
+* [ApiException](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/api-exception.md)
+* [ApiHelper](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/api-helper.md)
+* [CustomDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/custom-date-time-converter.md)
+* [UnixDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.6/doc/unix-date-time-converter.md)
 
