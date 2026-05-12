@@ -1,59 +1,79 @@
 
-# Getting Started with Cypress Test API
+# Getting Started with Webhooks and Callbacks API
 
 ## Introduction
 
-This is a sample API to demonstrate an OpenAPI spec with multiple endpoints and a custom model.
+A comprehensive API demonstrating webhooks and callbacks patterns.
+
+### Webhooks
+
+Webhooks allow your application to receive real-time notifications when certain events occur.
+
+### Callbacks
+
+Callbacks are used for asynchronous operations where the API will call back to your provided URL when the operation completes.
 
 ## Install the Package
 
 If you are building with .NET CLI tools then you can also use the following command:
 
 ```bash
-dotnet add package WesleyKeySDK --version 3.0.7
+dotnet add package WesleyKeySDK --version 4.0.0
 ```
 
 You can also view the package at:
-https://www.nuget.org/packages/WesleyKeySDK/3.0.7
-
-## Test the SDK
-
-The generated SDK also contain one or more Tests, which are contained in the Tests project. In order to invoke these test cases, you will need `NUnit 3.0 Test Adapter Extension` for Visual Studio. Once the SDK is complied, the test cases should appear in the Test Explorer window. Here, you can click `Run All` to execute these test cases.
+https://www.nuget.org/packages/WesleyKeySDK/4.0.0
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](doc/client.md)
 
 The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| DefaultHost | `string` | *Default*: `"www.example.com"` |
-| Environment | [`Environment`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/README.md#environments) | The API environment. <br> **Default: `Environment.Production`** |
-| Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(100)` |
-| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
+| Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(50)` |
+| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
+| LogBuilder | [`LogBuilder`](doc/log-builder.md) | Represents the logging configuration builder for API calls |
+| ApiKeyCredentials | [`ApiKeyCredentials`](doc/auth/custom-header-signature.md) | The Credentials Setter for Custom Header Signature |
+| BearerAuthCredentials | [`BearerAuthCredentials`](doc/auth/oauth-2-bearer-token.md) | The Credentials Setter for OAuth 2 Bearer token |
 
 The API client can be initialized as follows:
 
 ### Code-Based Initialization
 
 ```csharp
-using CypressTestAPI.Standard;
+using Microsoft.Extensions.Logging;
+using WebhooksAndCallbacksAPI.Standard;
+using WebhooksAndCallbacksAPI.Standard.Authentication;
 
 namespace ConsoleApp;
 
-CypressTestAPIClient client = new CypressTestAPIClient.Builder()
+WebhooksAndCallbacksAPIClient client = new WebhooksAndCallbacksAPIClient.Builder()
+    .ApiKeyCredentials(
+        new ApiKeyModel.Builder(
+            "X-API-Key"
+        )
+        .Build())
+    .BearerAuthCredentials(
+        new BearerAuthModel.Builder(
+            "AccessToken"
+        )
+        .Build())
     .HttpClientConfig(httpClientConfig =>
         httpClientConfig.Timeout(TimeSpan.FromSeconds(100)))
-    .Environment(CypressTestAPI.Standard.Environment.Production)
-    .DefaultHost("www.example.com")
+    .LoggingConfig(config => config
+        .LogLevel(LogLevel.Information)
+        .RequestConfig(reqConfig => reqConfig.Body(true))
+        .ResponseConfig(respConfig => respConfig.Headers(true))
+    )
     .Build();
 ```
 
 ### Configuration-Based Initialization
 
 ```csharp
-using CypressTestAPI.Standard;
+using WebhooksAndCallbacksAPI.Standard;
 using Microsoft.Extensions.Configuration;
 
 namespace ConsoleApp;
@@ -65,47 +85,57 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 // Instantiate your SDK and configure it from IConfiguration
-var client = CypressTestAPIClient
-    .FromConfiguration(configuration.GetSection("CypressTestAPI"));
+var client = WebhooksAndCallbacksAPIClient
+    .FromConfiguration(configuration.GetSection("WebhooksAndCallbacksAPI"));
 ```
 
-See the [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/configuration-based-initialization.md) section for details.
+See the [Configuration-Based Initialization](doc/configuration-based-initialization.md) section for details.
 
-## Environments
+## Authorization
 
-The SDK can be configured to use a different environment for making API calls. Available environments are:
+This API uses the following authentication schemes.
 
-### Fields
-
-| Name | Description |
-|  --- | --- |
-| Production | **Default** |
+* [`ApiKey (Custom Header Signature)`](doc/auth/custom-header-signature.md)
+* [`BearerAuth (OAuth 2 Bearer token)`](doc/auth/oauth-2-bearer-token.md)
 
 ## List of APIs
 
-* [API](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/controllers/api.md)
+* [Orders](doc/controllers/orders.md)
+
+## Webhooks
+
+* [Webhooks](doc/events/webhooks/webhooks-handler.md)
+* [Webhooks A](doc/events/webhooks/webhooks-a-handler.md)
+* [Webhooks B](doc/events/webhooks/webhooks-b-handler.md)
+* [Webhooks C](doc/events/webhooks/webhooks-c-handler.md)
+* [Webhooks No Verification](doc/events/webhooks/webhooks-no-verification-handler.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [Configuration-Based Initialization](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/configuration-based-initialization.md)
-* [HttpClientConfiguration](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/http-client-configuration.md)
-* [HttpClientConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/http-client-configuration-builder.md)
-* [ProxyConfigurationBuilder](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/proxy-configuration-builder.md)
+* [Configuration-Based Initialization](doc/configuration-based-initialization.md)
+* [HttpClientConfiguration](doc/http-client-configuration.md)
+* [HttpClientConfigurationBuilder](doc/http-client-configuration-builder.md)
+* [LogBuilder](doc/log-builder.md)
+* [LogRequestBuilder](doc/log-request-builder.md)
+* [LogResponseBuilder](doc/log-response-builder.md)
+* [ProxyConfigurationBuilder](doc/proxy-configuration-builder.md)
 
 ### HTTP
 
-* [HttpCallback](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/http-callback.md)
-* [HttpContext](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/http-context.md)
-* [HttpRequest](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/http-request.md)
-* [HttpResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/http-response.md)
-* [HttpStringResponse](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/http-string-response.md)
+* [HttpCallback](doc/http-callback.md)
+* [HttpContext](doc/http-context.md)
+* [HttpRequest](doc/http-request.md)
+* [HttpRequestData](doc/http-request-data.md)
+* [HttpResponse](doc/http-response.md)
+* [HttpStringResponse](doc/http-string-response.md)
 
 ### Utilities
 
-* [ApiException](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/api-exception.md)
-* [ApiHelper](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/api-helper.md)
-* [CustomDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/custom-date-time-converter.md)
-* [UnixDateTimeConverter](https://www.github.com/ZahraN444/wesley-key-dotnet-sdk/tree/3.0.7/doc/unix-date-time-converter.md)
+* [ApiException](doc/api-exception.md)
+* [ApiResponse](doc/api-response.md)
+* [ApiHelper](doc/api-helper.md)
+* [CustomDateTimeConverter](doc/custom-date-time-converter.md)
+* [UnixDateTimeConverter](doc/unix-date-time-converter.md)
 
