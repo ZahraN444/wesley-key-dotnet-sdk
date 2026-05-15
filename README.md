@@ -1,28 +1,30 @@
 
-# Getting Started with Webhooks and Callbacks API
+# Getting Started with Swagger Petstore - OpenAPI 3.0
 
 ## Introduction
 
-A comprehensive API demonstrating webhooks and callbacks patterns.
+This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+You can now help us improve the API whether it's by making changes to the definition itself or to the code.
+That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
 
-### Webhooks
+Some useful links:
 
-Webhooks allow your application to receive real-time notifications when certain events occur.
+- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
+- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
 
-### Callbacks
-
-Callbacks are used for asynchronous operations where the API will call back to your provided URL when the operation completes.
+Find out more about Swagger: [https://swagger.io](https://swagger.io)
 
 ## Install the Package
 
 If you are building with .NET CLI tools then you can also use the following command:
 
 ```bash
-dotnet add package WesleyKeySDK --version 4.0.0
+dotnet add package WesleyKeySDK --version 4.0.2
 ```
 
 You can also view the package at:
-https://www.nuget.org/packages/WesleyKeySDK/4.0.0
+https://www.nuget.org/packages/WesleyKeySDK/4.0.2
 
 ## Initialize the API Client
 
@@ -32,11 +34,12 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(50)` |
+| Environment | [`Environment`](README.md#environments) | The API environment. <br> **Default: `Environment.Production`** |
+| Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(30)` |
 | HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
 | LogBuilder | [`LogBuilder`](doc/log-builder.md) | Represents the logging configuration builder for API calls |
+| PetstoreAuthCredentials | [`PetstoreAuthCredentials`](doc/auth/oauth-2-implicit-grant.md) | The Credentials Setter for OAuth 2 Implicit Grant |
 | ApiKeyCredentials | [`ApiKeyCredentials`](doc/auth/custom-header-signature.md) | The Credentials Setter for Custom Header Signature |
-| BearerAuthCredentials | [`BearerAuthCredentials`](doc/auth/oauth-2-bearer-token.md) | The Credentials Setter for OAuth 2 Bearer token |
 
 The API client can be initialized as follows:
 
@@ -44,24 +47,34 @@ The API client can be initialized as follows:
 
 ```csharp
 using Microsoft.Extensions.Logging;
-using WebhooksAndCallbacksAPI.Standard;
-using WebhooksAndCallbacksAPI.Standard.Authentication;
+using SwaggerPetstoreOpenApi30.Standard;
+using SwaggerPetstoreOpenApi30.Standard.Authentication;
+using SwaggerPetstoreOpenApi30.Standard.Models;
+using System.Collections.Generic;
 
 namespace ConsoleApp;
 
-WebhooksAndCallbacksAPIClient client = new WebhooksAndCallbacksAPIClient.Builder()
+SwaggerPetstoreOpenApi30Client client = new SwaggerPetstoreOpenApi30Client.Builder()
+    .PetstoreAuthCredentials(
+        new PetstoreAuthModel.Builder(
+            "OAuthClientId",
+            "OAuthRedirectUri"
+        )
+        .OauthScopes(
+            new List<OauthScopePetstoreAuth>
+            {
+                OauthScopePetstoreAuth.Writepets,
+                OauthScopePetstoreAuth.Readpets,
+            })
+        .Build())
     .ApiKeyCredentials(
         new ApiKeyModel.Builder(
-            "X-API-Key"
-        )
-        .Build())
-    .BearerAuthCredentials(
-        new BearerAuthModel.Builder(
-            "AccessToken"
+            "api_key"
         )
         .Build())
     .HttpClientConfig(httpClientConfig =>
         httpClientConfig.Timeout(TimeSpan.FromSeconds(100)))
+    .Environment(SwaggerPetstoreOpenApi30.Standard.Environment.Production)
     .LoggingConfig(config => config
         .LogLevel(LogLevel.Information)
         .RequestConfig(reqConfig => reqConfig.Body(true))
@@ -73,7 +86,7 @@ WebhooksAndCallbacksAPIClient client = new WebhooksAndCallbacksAPIClient.Builder
 ### Configuration-Based Initialization
 
 ```csharp
-using WebhooksAndCallbacksAPI.Standard;
+using SwaggerPetstoreOpenApi30.Standard;
 using Microsoft.Extensions.Configuration;
 
 namespace ConsoleApp;
@@ -85,30 +98,34 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 // Instantiate your SDK and configure it from IConfiguration
-var client = WebhooksAndCallbacksAPIClient
-    .FromConfiguration(configuration.GetSection("WebhooksAndCallbacksAPI"));
+var client = SwaggerPetstoreOpenApi30Client
+    .FromConfiguration(configuration.GetSection("SwaggerPetstoreOpenApi30"));
 ```
 
 See the [Configuration-Based Initialization](doc/configuration-based-initialization.md) section for details.
+
+## Environments
+
+The SDK can be configured to use a different environment for making API calls. Available environments are:
+
+### Fields
+
+| Name | Description |
+|  --- | --- |
+| Production | **Default** |
 
 ## Authorization
 
 This API uses the following authentication schemes.
 
-* [`ApiKey (Custom Header Signature)`](doc/auth/custom-header-signature.md)
-* [`BearerAuth (OAuth 2 Bearer token)`](doc/auth/oauth-2-bearer-token.md)
+* [`petstore_auth (OAuth 2 Implicit Grant)`](doc/auth/oauth-2-implicit-grant.md)
+* [`api_key (Custom Header Signature)`](doc/auth/custom-header-signature.md)
 
 ## List of APIs
 
-* [Orders](doc/controllers/orders.md)
-
-## Webhooks
-
-* [Webhooks](doc/events/webhooks/webhooks-handler.md)
-* [Webhooks A](doc/events/webhooks/webhooks-a-handler.md)
-* [Webhooks B](doc/events/webhooks/webhooks-b-handler.md)
-* [Webhooks C](doc/events/webhooks/webhooks-c-handler.md)
-* [Webhooks No Verification](doc/events/webhooks/webhooks-no-verification-handler.md)
+* [Pet](doc/controllers/pet.md)
+* [Store](doc/controllers/store.md)
+* [User](doc/controllers/user.md)
 
 ## SDK Infrastructure
 
@@ -127,7 +144,6 @@ This API uses the following authentication schemes.
 * [HttpCallback](doc/http-callback.md)
 * [HttpContext](doc/http-context.md)
 * [HttpRequest](doc/http-request.md)
-* [HttpRequestData](doc/http-request-data.md)
 * [HttpResponse](doc/http-response.md)
 * [HttpStringResponse](doc/http-string-response.md)
 

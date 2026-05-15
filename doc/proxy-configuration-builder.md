@@ -18,12 +18,12 @@ To configure the SDK to use a proxy server, initialize the proxy configuration d
 ## Usage Example
 
 ```csharp
-using WebhooksAndCallbacksAPI.Standard;
-using WebhooksAndCallbacksAPI.Standard.Http.Client.Proxy;
+using SwaggerPetstoreOpenApi30.Standard;
+using SwaggerPetstoreOpenApi30.Standard.Http.Client.Proxy;
 
 namespace ConsoleApp;
 
-var client = new WebhooksAndCallbacksAPIClient.Builder()
+var client = new SwaggerPetstoreOpenApi30Client.Builder()
 .HttpClientConfig(config => config
     .Proxy(new ProxyConfigurationBuilder("http://localhost")
             .Port(8080)

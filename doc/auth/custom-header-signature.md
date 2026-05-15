@@ -3,13 +3,13 @@
 
 
 
-Documentation for accessing and setting credentials for ApiKey.
+Documentation for accessing and setting credentials for api_key.
 
 ## Auth Credentials
 
 | Name | Type | Description | Setter | Getter |
 |  --- | --- | --- | --- | --- |
-| XAPIKey | `string` | API key for authentication | `XAPIKey` | `XAPIKey` |
+| ApiKey | `string` | - | `ApiKey` | `ApiKey` |
 
 
 
@@ -22,15 +22,15 @@ Documentation for accessing and setting credentials for ApiKey.
 You must provide credentials in the client as shown in the following code snippet.
 
 ```csharp
-using WebhooksAndCallbacksAPI.Standard;
-using WebhooksAndCallbacksAPI.Standard.Authentication;
+using SwaggerPetstoreOpenApi30.Standard;
+using SwaggerPetstoreOpenApi30.Standard.Authentication;
 
 namespace ConsoleApp;
 
-WebhooksAndCallbacksAPIClient client = new WebhooksAndCallbacksAPIClient.Builder()
+SwaggerPetstoreOpenApi30Client client = new SwaggerPetstoreOpenApi30Client.Builder()
     .ApiKeyCredentials(
         new ApiKeyModel.Builder(
-            "X-API-Key"
+            "api_key"
         )
         .Build())
     .Build();

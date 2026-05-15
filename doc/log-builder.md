@@ -21,14 +21,14 @@ To use a custom logger, you can provide any implementation of Microsoft.Extensio
 
 ```csharp
 using Microsoft.Extensions.Logging;
-using WebhooksAndCallbacksAPI.Standard;
+using SwaggerPetstoreOpenApi30.Standard;
 
 namespace ConsoleApp;
 
 var factory = LoggerFactory.Create(builder => { builder.AddConsole(); });
-var logger = factory.CreateLogger<WebhooksAndCallbacksAPIClient>();
+var logger = factory.CreateLogger<SwaggerPetstoreOpenApi30Client>();
 
-var client = new WebhooksAndCallbacksAPIClient.Builder()
+var client = new SwaggerPetstoreOpenApi30Client.Builder()
     .LoggingConfig(config => config
         .Logger(logger)
         .LogLevel(LogLevel.Information)

@@ -16,9 +16,9 @@ The following code sample demonstrates how to initialize the SDK client using an
 The `Builder.FromConfiguration` method reads values from the provided configuration section and returns a builder instance, allowing you to override specific properties directly in code if needed before building the final client.
 
 ```csharp
-using WebhooksAndCallbacksAPI.Standard;
+using SwaggerPetstoreOpenApi30.Standard;
 using Microsoft.Extensions.Configuration;
-using Environment = WebhooksAndCallbacksAPI.Standard.Environment;
+using Environment = SwaggerPetstoreOpenApi30.Standard.Environment;
 
 namespace ConsoleApp;
 
@@ -29,8 +29,8 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 // Instantiate your SDK builder and configure it from IConfiguration with overrides
-var client = WebhooksAndCallbacksAPIClient.Builder
-    .FromConfiguration(configuration.GetSection("WebhooksAndCallbacksAPI"))
+var client = SwaggerPetstoreOpenApi30Client.Builder
+    .FromConfiguration(configuration.GetSection("SwaggerPetstoreOpenApi30"))
     .Environment(Environment.Production)
     .HttpClientConfig(c => c.Timeout(TimeSpan.FromSeconds(60)))
     .Build();
@@ -40,13 +40,15 @@ var client = WebhooksAndCallbacksAPIClient.Builder
 
 ```csharp
 {
-  "WebhooksAndCallbacksAPI": {
+  "SwaggerPetstoreOpenApi30": {
     "Environment": "production",
-    "ApiKeyCredentials": {
-      "XAPIKey": "xAPIKey",
+    "PetstoreAuthCredentials": {
+      "OauthClientId": "oauthClientId",
+      "OauthRedirectUri": "oauthRedirectUri",
+      "OauthScopes": [],
     },
-    "BearerAuthCredentials": {
-      "AccessToken": "accessToken",
+    "ApiKeyCredentials": {
+      "ApiKey": "apiKey",
     },
     "LoggingConfig": {
       "LogLevel": "Debug",
